@@ -2,6 +2,7 @@
 """Module BasicAuth"""
 
 import base64
+import re
 from typing import Optional, TypeVar
 from .auth import Auth
 from models.user import User
@@ -23,14 +24,12 @@ class BasicAuth(Auth):
         Return:
             Optional: Base64 part of the Authorization header or None
         """
-        if authorization_header is None or \
-                not isinstance(authorization_header, str):
-            return None
-
-        if not authorization_header.startswith('Basic '):
-            return None
-
-        return authorization_header[6:]
+        if type(authorization_header) == str:
+            pattern = r'Basic (?P<token>.+)'
+            field_match = re.fullmatch(pattern, authorization_header.strip())
+            if field_match is not None:
+                return field_match.group('token')
+        return None
 
     def decode_base64_authorization_header(
             self, base64_authorization_header: str) -> Optional[str]:
