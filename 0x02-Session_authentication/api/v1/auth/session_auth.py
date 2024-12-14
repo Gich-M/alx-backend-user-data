@@ -21,4 +21,3 @@ class SessionAuth(Auth):
         """Retrieves the `user_id` associated with a `session_id`."""
         if isinstance(session_id, str):
             return self.user_id_by_session_id.get(session_id)
-
