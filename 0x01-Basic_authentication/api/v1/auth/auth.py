@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Authentication system template."""
 
+import re
 from flask import request
 from typing import List, TypeVar
 
@@ -17,18 +18,17 @@ class Auth:
         Return:
             bool:True if authentication is required, False otherwise
         """
-        if path is None:
-            return True
-
-        if not excluded_paths:
-            return True
-
-        normalized_path = path if path.endswith('/') else path + '/'
-
-        for excluded_path in excluded_paths:
-            if normalized_path.startswith(excluded_path):
-                return False
-
+        if path is not None and excluded_paths is not None:
+            for exclusion_path in map(lambda x: x.strip(), excluded_paths):
+                pattern = ''
+                if exclusion_path[-1] == '*':
+                    pattern = '{}.*'.format(exclusion_path[0:-1])
+                elif exclusion_path[-1] == '/':
+                    pattern = '{}/*'.format(exclusion_path[0:-1])
+                else:
+                    pattern = '{}/*'.format(exclusion_path)
+                if re.match(pattern, path):
+                    return False
         return True
 
     def authorization_header(self, request=None) -> str:
@@ -40,10 +40,9 @@ class Auth:
         Return:
             str: Authorization header value or None
         """
-        if request is None:
-            return None
-
-        return request.headers.get('Authorization')
+        if request is not None:
+            return request.headers.get('Authorization', None)
+        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
