@@ -3,7 +3,7 @@
 
 import base64
 from typing import Optional, TypeVar
-from api.v1.auth.basic_auth import Auth
+from api.v1.auth.auth import Auth
 
 
 class BasicAuth(Auth):
