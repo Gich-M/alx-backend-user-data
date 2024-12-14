@@ -15,15 +15,15 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 auth = None
 if os.getenv('AUTH_TYPE') == 'auth':
-    from api.v1.auth import Auth
+    from api.v1.auth.auth import Auth
     auth = Auth()
 
 
 @app.before_request
 def authenticate_request():
     """
-    Authenticates requests before processing
-    - Checks for auth of non-exempt routes
+    Authenticate requests before processing
+    - Checks for authentication on non-exempt routes
     """
     if not auth:
         return
