@@ -3,6 +3,8 @@
 from uuid import uuid4
 from .auth import Auth
 
+from models.user import User
+
 
 class SessionAuth(Auth):
     """Session authentication class.
@@ -21,3 +23,11 @@ class SessionAuth(Auth):
         """Retrieves the `user_id` associated with a `session_id`."""
         if isinstance(session_id, str):
             return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """Retrieves a user by based on `session_id`."""
+        session_id = self.session_cookie(request)
+        if session_id is not None:
+            user_id = self.user_id_for_session_id(session_id)
+        if user_id is not None:
+            return User.get(user_id)
