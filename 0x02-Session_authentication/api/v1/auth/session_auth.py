@@ -9,7 +9,7 @@ class SessionAuth(Auth):
     """
     user_id_by_session_id = {}
 
-    def create_session(self, user_id: str=None) -> str:
+    def create_session(self, user_id: str = None) -> str:
         """Creates a Session ID for a `user_id`."""
         if isinstance(user_id, str):
             session_id = uuid.uuid4()
