@@ -17,7 +17,7 @@ class SessionDBAuth(SessionExpAuth):
         """Creates and stores a session id for the user.
         """
         session_id = super().create_session(user_id)
-        if isinstance(session_id, str):
+        if type(session_id) == str:
             kwargs = {
                 'user_id': user_id,
                 'session_id': session_id,
@@ -36,10 +36,10 @@ class SessionDBAuth(SessionExpAuth):
             return None
         if len(sessions) <= 0:
             return None
-        curr_time = datetime.now()
+        cur_time = datetime.now()
         time_span = timedelta(seconds=self.session_duration)
         exp_time = sessions[0].created_at + time_span
-        if exp_time < curr_time:
+        if exp_time < cur_time:
             return None
         return sessions[0].user_id
 
