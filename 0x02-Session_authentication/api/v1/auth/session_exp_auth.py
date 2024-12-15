@@ -25,7 +25,7 @@ class SessionExpAuth(SessionAuth):
         """Creates a session id for the user.
         """
         session_id = super().create_session(user_id)
-        if type(session_id) != str:
+        if isinstance(session_id, str) != str:
             return None
         self.user_id_by_session_id[session_id] = {
             'user_id': user_id,

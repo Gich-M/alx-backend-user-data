@@ -17,7 +17,7 @@ class SessionDBAuth(SessionExpAuth):
         """Creates and stores a session id for the user.
         """
         session_id = super().create_session(user_id)
-        if type(session_id) == str:
+        if isinstance(session_id, str):
             kwargs = {
                 'user_id': user_id,
                 'session_id': session_id,
