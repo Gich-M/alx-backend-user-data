@@ -13,6 +13,7 @@ from models.user import User
 class BasicAuth(Auth):
     """Basic authentication class - Inherits from Auth.
     """
+
     def extract_base64_authorization_header(
             self,
             authorization_header: str) -> str:
@@ -31,7 +32,7 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
             self,
             base64_authorization_header: str,
-            ) -> str:
+    ) -> str:
         """Decodes a base64-encoded authorization header.
         """
         if isinstance(base64_authorization_header, str):
@@ -47,7 +48,7 @@ class BasicAuth(Auth):
     def extract_user_credentials(
             self,
             decoded_base64_authorization_header: str,
-            ) -> Tuple[str, str]:
+    ) -> Tuple[str, str]:
         """Extracts user credentials from a base64-decoded authorization
         header that uses the Basic authentication flow.
         """

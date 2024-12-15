@@ -40,11 +40,14 @@ print("{} => {}".format(tmp_session_id, tmp_user_id))
 print("---")
 
 session_1_bis = sa.create_session(user_id_1)
-print("{} => {}: {}".format(user_id_1, session_1_bis, sa.user_id_by_session_id))
+print(
+    "{} => {}: {}".format(
+        user_id_1,
+        session_1_bis,
+        sa.user_id_by_session_id))
 
 tmp_user_id = sa.user_id_for_session_id(session_1_bis)
 print("{} => {}".format(session_1_bis, tmp_user_id))
 
 tmp_user_id = sa.user_id_for_session_id(session_1)
 print("{} => {}".format(session_1, tmp_user_id))
-
